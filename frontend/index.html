@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REDLINE | Exclusive Supercars</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- This dynamically loads your Header from index.js -->
+  <site-header></site-header>
+
+  <!-- HERO SECTION WITH VIDEO BACKGROUND -->
+  <section class="hero" id="hero">
+    
+    <!-- Background Video -->
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="videos/index-hero.mp4" type="video/mp4">
+    </video>
+
+    <!-- Dark Overlay to make text readable -->
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <span class="hero-tag">Pure Performance</span>
+      <h1 class="hero-title">PRECISION IN <span>MOTION.</span></h1>
+      <p class="hero-desc">
+        Experience the pinnacle of automotive engineering. Custom color configurations, instant availability, and nationwide delivery.
+      </p>
+      <button class="btn-red" id="explore-btn">Configure Vehicle</button>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>637 HP</h3>
+          <p>Peak Power</p>
+        </div>
+        <div class="stat-item">
+          <h3>2.9s</h3>
+          <p>0-60 MPH</p>
+        </div>
+        <div class="stat-item">
+          <h3>100%</h3>
+          <p>Electric</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SHOWROOM SECTION -->
+  <section class="showroom-section" id="showroom">
+    <h2 class="section-title">Interactive Showroom</h2>
+    <p class="section-subtitle">Select color variants and switch angles in real-time</p>
+
+    <div class="showroom-card">
+      <!-- Left: Vehicle Display (Pure SVG Visualizer) -->
+      <div class="vehicle-display">
+        <div class="main-image-container" id="car-svg-container">
+          <!-- Interactive SVG car render will be injected by index.js -->
+        </div>
+
+        <!-- Angle Buttons -->
+        <div class="angle-thumbnails">
+          <button class="thumb-btn active" data-angle="front">Front View</button>
+          <button class="thumb-btn" data-angle="side">Side View</button>
+          <button class="thumb-btn" data-angle="rear">Rear View</button>
+        </div>
+      </div>
+
+      <!-- Right: Vehicle Details & Controls -->
+      <div class="vehicle-details" id="specs">
+        <span class="badge">In Stock • 2026 Edition</span>
+        <h2>Redline GT Coupe</h2>
+        <div class="price-tag">$104,900</div>
+
+        <!-- Color Swatches -->
+        <div class="color-section-title">
+          Selected Paint: <strong id="color-name-display">Supersonic Red</strong>
+        </div>
+        <div class="color-swatches">
+          <div class="color-dot active" data-color="red" data-hex="#ff1e27" data-name="Supersonic Red" style="background-color: #ff1e27;"></div>
+          <div class="color-dot" data-color="black" data-hex="#111111" data-name="Mythos Black" style="background-color: #111111;"></div>
+          <div class="color-dot" data-color="white" data-hex="#f8f9fa" data-name="Ibis White" style="background-color: #f8f9fa;"></div>
+        </div>
+
+        <!-- Specs Grid -->
+        <div class="specs-grid">
+          <div class="spec-box">
+            <span>Drivetrain</span>
+            <strong>Dual-Motor AWD</strong>
+          </div>
+          <div class="spec-box">
+            <span>Range</span>
+            <strong>249 Miles</strong>
+          </div>
+          <div class="spec-box">
+            <span>Acceleration</span>
+            <strong>0-60 in 2.9s</strong>
+          </div>
+          <div class="spec-box">
+            <span>Transmission</span>
+            <strong>2-Speed Auto</strong>
+          </div>
+        </div>
+
+        <button class="btn-red" id="reserve-btn" style="width: 100%; padding: 15px;">
+          Reserve Vehicle
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- This dynamically loads your Footer from index.js -->
+  <site-footer></site-footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Message Notification</div>
+
+  <!-- Single JavaScript File -->
+  <script src="index.js"></script>
+</body>
+</html>
