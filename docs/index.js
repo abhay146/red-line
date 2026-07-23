@@ -118,8 +118,8 @@ function generateCarSVG(colorHex, angle) {
 function updateShowroom() {
   const svgContainer = document.getElementById('car-svg-container');
   const colorNameDisplay = document.getElementById('color-name-display');
-  
-  if(svgContainer && colorNameDisplay) {
+
+  if (svgContainer && colorNameDisplay) {
     svgContainer.innerHTML = generateCarSVG(state.currentColorHex, state.currentAngle);
     colorNameDisplay.innerText = state.currentColorName;
   }
@@ -178,44 +178,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
-      e.preventDefault(); 
+      e.preventDefault();
       showToast('Message Sent! Our Concierge will contact you shortly.');
-      contactForm.reset(); 
+      contactForm.reset();
     });
   }
 });
 
-const form = document.getElementById("contact-form");
 
-form.addEventListener("submit", async function (e) {
+// form submission to backend server
+
+const form = document.getElementById("contact-form");
+if (form) {
+
+  form.addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
     const formData = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("phone").value,
-        message: document.getElementById("message").value
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      message: document.getElementById("message").value
     };
 
-   const response = await fetch("https://red-line.onrender.com/contact", {
+    const response = await fetch("https://red-line.onrender.com/contact", {
 
-    method: "POST",
+      method: "POST",
 
-    headers: {
+      headers: {
         "Content-Type": "application/json"
-    },
+      },
 
-    body: JSON.stringify(formData)
+      body: JSON.stringify(formData)
 
-});
-
-
-const result = await response.json();
-
-alert(result.message);
-
-form.reset();
+    });
 
 
-});
+    const result = await response.json();
+
+    // alert(result.message);
+
+    form.reset();
+
+
+  });
+}
