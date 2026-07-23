@@ -198,7 +198,7 @@ form.addEventListener("submit", async function (e) {
         message: document.getElementById("message").value
     };
 
-   const response = await fetch("http://localhost:3000/contact", {
+   const response = await fetch("https://red-line.onrender.com/contact", {
 
     method: "POST",
 
