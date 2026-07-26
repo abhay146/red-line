@@ -1,10 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 
 const app = express();
 
@@ -18,10 +16,8 @@ app.use(express.json());
 // MongoDB Connection
 // ===============================
 
-
 mongoose.connect(
-    process.env.MONGO_URL ||
-    "mongodb+srv://abhaysingh840019_db_user:shiva6789@cluster0.oqbmbcm.mongodb.net/redlineDB"
+    process.env.MONGO_URL
 )
 .then(()=>{
 
@@ -45,11 +41,9 @@ mongoose.connect(
 
 
 
-
 // ===============================
-// Contact Schema
+// Contact Model
 // ===============================
-
 
 const Contact = mongoose.model(
 
@@ -87,11 +81,9 @@ const Contact = mongoose.model(
 
 
 
-
 // ===============================
-// User Schema
+// User Model
 // ===============================
-
 
 const User = mongoose.model(
 
@@ -117,7 +109,6 @@ const User = mongoose.model(
             required:true
         }
 
-
     },
 
     "users"
@@ -135,9 +126,7 @@ const User = mongoose.model(
 // Contact API
 // ===============================
 
-
 app.post("/contact", async(req,res)=>{
-
 
     try{
 
@@ -176,22 +165,23 @@ app.post("/contact", async(req,res)=>{
 
 
     }
-
     catch(error){
 
 
-        console.log(error);
+        console.log(
+            "Contact Error:",
+            error
+        );
 
 
         res.status(500).json({
 
-            message:"Contact save failed"
+            message:"Contact failed"
 
         });
 
 
     }
-
 
 
 });
@@ -212,6 +202,18 @@ app.post("/contact", async(req,res)=>{
 app.post("/signup", async(req,res)=>{
 
 
+    console.log(
+        "========== SIGNUP API HIT =========="
+    );
+
+
+    console.log(
+        "Signup Data:",
+        req.body
+    );
+
+
+
     try{
 
 
@@ -223,15 +225,13 @@ app.post("/signup", async(req,res)=>{
 
             password
 
-
         } = req.body;
 
 
 
 
-        // Check user already exists
 
-        const existingUser = await User.findOne({
+        const userExist = await User.findOne({
 
             email:email
 
@@ -241,7 +241,12 @@ app.post("/signup", async(req,res)=>{
 
 
 
-        if(existingUser){
+        if(userExist){
+
+
+            console.log(
+                "User already exists"
+            );
 
 
             return res.status(400).json({
@@ -258,10 +263,7 @@ app.post("/signup", async(req,res)=>{
 
 
 
-
-        // Password Encrypt
-
-        const hashedPassword = await bcrypt.hash(
+        const hashPassword = await bcrypt.hash(
 
             password,
 
@@ -274,15 +276,13 @@ app.post("/signup", async(req,res)=>{
 
 
 
-
-
         const user = new User({
 
             name:name,
 
             email:email,
 
-            password:hashedPassword
+            password:hashPassword
 
         });
 
@@ -291,7 +291,7 @@ app.post("/signup", async(req,res)=>{
 
 
 
-        await user.save();
+        const savedUser = await user.save();
 
 
 
@@ -299,9 +299,14 @@ app.post("/signup", async(req,res)=>{
 
 
         console.log(
-            "User Created:",
-            email
+
+            "New User Saved:",
+
+            savedUser
+
         );
+
+
 
 
 
@@ -318,12 +323,16 @@ app.post("/signup", async(req,res)=>{
 
 
     }
-
-
     catch(error){
 
 
-        console.log(error);
+        console.log(
+
+            "Signup Error:",
+
+            error
+
+        );
 
 
         res.status(500).json({
@@ -347,14 +356,24 @@ app.post("/signup", async(req,res)=>{
 
 
 
-
-
 // ===============================
 // Login API
 // ===============================
 
 
 app.post("/login", async(req,res)=>{
+
+
+    console.log(
+        "========== LOGIN API HIT =========="
+    );
+
+
+    console.log(
+        "Login Data:",
+        req.body
+    );
+
 
 
     try{
@@ -366,10 +385,7 @@ app.post("/login", async(req,res)=>{
 
             password
 
-
         } = req.body;
-
-
 
 
 
@@ -388,8 +404,12 @@ app.post("/login", async(req,res)=>{
 
 
 
-
         if(!user){
+
+
+            console.log(
+                "User Not Found"
+            );
 
 
             return res.status(404).json({
@@ -408,10 +428,7 @@ app.post("/login", async(req,res)=>{
 
 
 
-        // Compare Password
-
-
-        const passwordMatch = await bcrypt.compare(
+        const checkPassword = await bcrypt.compare(
 
             password,
 
@@ -425,8 +442,12 @@ app.post("/login", async(req,res)=>{
 
 
 
+        if(!checkPassword){
 
-        if(!passwordMatch){
+
+            console.log(
+                "Wrong Password"
+            );
 
 
             return res.status(400).json({
@@ -445,10 +466,6 @@ app.post("/login", async(req,res)=>{
 
 
 
-
-        // Create JWT Token
-
-
         const token = jwt.sign(
 
             {
@@ -460,7 +477,7 @@ app.post("/login", async(req,res)=>{
             },
 
 
-            "redline_secret_key",
+            process.env.JWT_SECRET || "redline_secret_key",
 
 
             {
@@ -469,9 +486,22 @@ app.post("/login", async(req,res)=>{
 
             }
 
-
         );
 
+
+
+
+
+
+
+
+        console.log(
+
+            "Login Successful:",
+
+            email
+
+        );
 
 
 
@@ -486,6 +516,7 @@ app.post("/login", async(req,res)=>{
 
             token:token,
 
+
             user:{
 
                 name:user.name,
@@ -494,7 +525,6 @@ app.post("/login", async(req,res)=>{
 
             }
 
-
         });
 
 
@@ -502,13 +532,18 @@ app.post("/login", async(req,res)=>{
 
 
 
+
     }
-
-
     catch(error){
 
 
-        console.log(error);
+        console.log(
+
+            "Login Error:",
+
+            error
+
+        );
 
 
         res.status(500).json({
@@ -531,16 +566,18 @@ app.post("/login", async(req,res)=>{
 
 
 
-
 // ===============================
 // Test API
 // ===============================
 
-
 app.get("/",(req,res)=>{
 
 
-    res.send("Redline Backend Running");
+    res.send(
+
+        "Redline Backend Running"
+
+    );
 
 
 });
@@ -557,11 +594,18 @@ app.get("/",(req,res)=>{
 // ===============================
 
 
-app.listen(3000,()=>{
+const PORT = process.env.PORT || 3000;
+
+
+app.listen(PORT,()=>{
 
 
     console.log(
-        "Server running on port 3000"
+
+        "Server running on port",
+
+        PORT
+
     );
 
 
