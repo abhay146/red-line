@@ -1,46 +1,659 @@
 // ==========================================
 // 1. WEB COMPONENTS (Header & Footer)
 // ==========================================
+// class SiteHeader extends HTMLElement {
+//   connectedCallback() {
+//     this.innerHTML = `
+//       <header>
+//         <a href="index.html" class="logo">
+//           <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+//             <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+//             <path d="M12 12l4-4" stroke="#ff1e27" stroke-width="2.5" stroke-linecap="round"/>
+//           </svg>
+//           RED<span>LINE</span>
+//         </a>
+
+//         <nav>
+//           <ul class="nav-links">
+//             <li><a href="index.html">Home</a></li>
+//             <li><a href="about-us.html">About Us</a></li>
+//             <li><a href="contact-us.html">Contact US</a></li>
+//           </ul>
+//         </nav>
+
+//         <div class="header-actions">
+//           <button class="btn-red" onclick="window.location.href='#'">Login</button>
+//         </div>
+//       </header>
+//     `;
+
+//     // Highlight the active navigation link based on the current URL
+//     let currentPath = window.location.pathname.split('/').pop();
+//     if (currentPath === '') currentPath = 'index.html';
+
+//     const navLinks = this.querySelectorAll('.nav-links a');
+//     navLinks.forEach(link => {
+//       const linkHref = link.getAttribute('href');
+//       if (linkHref === currentPath || linkHref.startsWith(currentPath + '#')) {
+//         link.classList.add('active');
+//       }
+//     });
+//   }
+// }
+// customElements.define('site-header', SiteHeader);
+
 class SiteHeader extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
-      <header>
-        <a href="index.html" class="logo">
-          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-            <path d="M12 12l4-4" stroke="#ff1e27" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          RED<span>LINE</span>
-        </a>
 
-        <nav>
-          <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about-us.html">About Us</a></li>
-            <li><a href="contact-us.html">Contact US</a></li>
-          </ul>
-        </nav>
+connectedCallback() {
 
-        <div class="header-actions">
-          <button class="btn-red" onclick="window.location.href='#'">Login</button>
-        </div>
-      </header>
-    `;
 
-    // Highlight the active navigation link based on the current URL
-    let currentPath = window.location.pathname.split('/').pop();
-    if (currentPath === '') currentPath = 'index.html';
+this.innerHTML = `
 
-    const navLinks = this.querySelectorAll('.nav-links a');
-    navLinks.forEach(link => {
-      const linkHref = link.getAttribute('href');
-      if (linkHref === currentPath || linkHref.startsWith(currentPath + '#')) {
-        link.classList.add('active');
-      }
-    });
-  }
+<header>
+
+<a href="index.html" class="logo">
+
+<svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+<path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+
+<path d="M12 12l4-4" stroke="#ff1e27" stroke-width="2.5" stroke-linecap="round"/>
+
+</svg>
+
+RED<span>LINE</span>
+
+</a>
+
+
+
+<nav>
+
+<ul class="nav-links">
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="about-us.html">About Us</a></li>
+
+<li><a href="contact-us.html">Contact US</a></li>
+
+</ul>
+
+</nav>
+
+
+
+<div class="header-actions">
+
+<button class="btn-red login-btn">
+Login
+</button>
+
+</div>
+
+
+</header>
+
+
+
+
+
+<!-- AUTH MODAL -->
+
+
+<div class="auth-modal" style="display:none;">
+
+
+<div class="modal-content">
+
+
+<span class="close-btn">
+&times;
+</span>
+
+
+
+<!-- LOGIN -->
+
+
+<div class="login-section">
+
+
+<h2>
+Login
+</h2>
+
+
+<form class="login-form">
+
+
+<input 
+type="email"
+class="login-email"
+placeholder="Email"
+required
+>
+
+
+<input 
+type="password"
+class="login-password"
+placeholder="Password"
+required
+>
+
+
+<button class="btn-red">
+Login
+</button>
+
+
+</form>
+
+
+
+<p>
+
+Don't have account?
+
+<a href="#" class="show-signup">
+Sign Up
+</a>
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- SIGNUP -->
+
+
+<div class="signup-section" style="display:none;">
+
+
+<h2>
+Create Account
+</h2>
+
+
+
+<form class="signup-form">
+
+
+<input
+type="text"
+class="signup-name"
+placeholder="Full Name"
+required
+>
+
+
+<input
+type="email"
+class="signup-email"
+placeholder="Email"
+required
+>
+
+
+<input
+type="password"
+class="signup-password"
+placeholder="Password"
+required
+>
+
+
+<button class="btn-red">
+Sign Up
+</button>
+
+
+</form>
+
+
+
+<p>
+
+Already have account?
+
+<a href="#" class="show-login">
+Login
+</a>
+
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+
+
+
+// ========================
+// Active Menu
+// ========================
+
+
+let currentPath = window.location.pathname.split('/').pop();
+
+
+if(currentPath==="")
+currentPath="index.html";
+
+
+
+this.querySelectorAll(".nav-links a")
+.forEach(link=>{
+
+
+if(link.getAttribute("href")===currentPath){
+
+link.classList.add("active");
+
 }
-customElements.define('site-header', SiteHeader);
+
+
+});
+
+
+
+
+
+
+
+// ========================
+// Elements
+// ========================
+
+
+const modal=this.querySelector(".auth-modal");
+
+
+const loginBtn=this.querySelector(".login-btn");
+
+
+const closeBtn=this.querySelector(".close-btn");
+
+
+
+const loginSection=this.querySelector(".login-section");
+
+const signupSection=this.querySelector(".signup-section");
+
+
+
+const showSignup=this.querySelector(".show-signup");
+
+const showLogin=this.querySelector(".show-login");
+
+
+
+const loginForm=this.querySelector(".login-form");
+
+const signupForm=this.querySelector(".signup-form");
+
+
+
+
+
+
+
+// OPEN MODAL
+
+
+loginBtn.addEventListener("click",()=>{
+
+
+modal.style.display="flex";
+
+
+});
+
+
+
+
+
+
+
+// CLOSE
+
+
+closeBtn.addEventListener("click",()=>{
+
+
+modal.style.display="none";
+
+
+});
+
+
+
+
+
+modal.addEventListener("click",(e)=>{
+
+
+if(e.target===modal)
+
+modal.style.display="none";
+
+
+});
+
+
+
+
+
+
+
+
+
+// SWITCH SIGNUP
+
+
+showSignup.addEventListener("click",(e)=>{
+
+
+e.preventDefault();
+
+
+loginSection.style.display="none";
+
+
+signupSection.style.display="block";
+
+
+});
+
+
+
+
+
+
+
+// SWITCH LOGIN
+
+
+showLogin.addEventListener("click",(e)=>{
+
+
+e.preventDefault();
+
+
+signupSection.style.display="none";
+
+
+loginSection.style.display="block";
+
+
+});
+
+
+
+
+
+
+
+
+
+
+// ========================
+// SIGNUP API
+// ========================
+
+
+signupForm.addEventListener("submit",async(e)=>{
+
+
+e.preventDefault();
+
+
+
+const data={
+
+
+name:this.querySelector(".signup-name").value,
+
+
+email:this.querySelector(".signup-email").value,
+
+
+password:this.querySelector(".signup-password").value
+
+
+};
+
+
+
+console.log("Signup Data:",data);
+
+
+
+try{
+
+
+const res=await fetch(
+
+"https://red-line.onrender.com/signup",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify(data)
+
+
+}
+
+
+);
+
+
+
+const result=await res.json();
+
+
+
+console.log(
+"Signup Response:",
+result
+);
+
+
+
+alert(result.message);
+
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+alert("Signup error");
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+// ========================
+// LOGIN API
+// ========================
+
+
+loginForm.addEventListener("submit",async(e)=>{
+
+
+e.preventDefault();
+
+
+
+const data={
+
+
+email:this.querySelector(".login-email").value,
+
+
+password:this.querySelector(".login-password").value
+
+
+};
+
+
+
+console.log("Login Data:",data);
+
+
+
+try{
+
+
+const res=await fetch(
+
+"https://red-line.onrender.com/login",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify(data)
+
+
+}
+
+
+);
+
+
+
+const result=await res.json();
+
+
+
+console.log(
+"Login Response:",
+result
+);
+
+
+
+
+if(result.token){
+
+
+localStorage.setItem(
+"token",
+result.token
+);
+
+
+
+alert("Login Successful");
+
+
+modal.style.display="none";
+
+
+}
+
+else{
+
+
+alert(result.message);
+
+
+}
+
+
+
+}
+
+
+catch(error){
+
+
+console.log(error);
+
+
+alert("Login error");
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
+}
+
+
+
+customElements.define(
+"site-header",
+SiteHeader
+);
+
 
 class SiteFooter extends HTMLElement {
   connectedCallback() {
