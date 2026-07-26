@@ -657,6 +657,7 @@ SiteHeader
 
 class SiteFooter extends HTMLElement {
   connectedCallback() {
+      console.log("SITE HEADER STARTED");
     this.innerHTML = `
       <footer>
         <div class="footer-grid">
