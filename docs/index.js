@@ -44,8 +44,7 @@
 
 class SiteHeader extends HTMLElement {
 
-connectedCallback() {
-
+connectedCallback(){
 
 this.innerHTML = `
 
@@ -54,17 +53,13 @@ this.innerHTML = `
 <a href="index.html" class="logo">
 
 <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-
 <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
-
-<path d="M12 12l4-4" stroke="#ff1e27" stroke-width="2.5" stroke-linecap="round"/>
-
+<path d="M12 12l4-4" stroke="#ff1e27" stroke-width="2.5"/>
 </svg>
 
 RED<span>LINE</span>
 
 </a>
-
 
 
 <nav>
@@ -82,7 +77,6 @@ RED<span>LINE</span>
 </nav>
 
 
-
 <div class="header-actions">
 
 <button class="btn-red login-btn">
@@ -96,12 +90,7 @@ Login
 
 
 
-
-
-<!-- AUTH MODAL -->
-
-
-<div class="auth-modal" style="display:none;">
+<div class="auth-modal">
 
 
 <div class="modal-content">
@@ -113,37 +102,32 @@ Login
 
 
 
-<!-- LOGIN -->
-
-
 <div class="login-section">
 
 
-<h2>
-Login
-</h2>
+<h2>Login</h2>
 
 
 <form class="login-form">
 
 
 <input 
-type="email"
 class="login-email"
+type="email"
 placeholder="Email"
 required
 >
 
 
 <input 
-type="password"
 class="login-password"
+type="password"
 placeholder="Password"
 required
 >
 
 
-<button class="btn-red">
+<button type="submit" class="btn-red">
 Login
 </button>
 
@@ -153,7 +137,6 @@ Login
 
 
 <p>
-
 Don't have account?
 
 <a href="#" class="show-signup">
@@ -169,48 +152,40 @@ Sign Up
 
 
 
-
-
-<!-- SIGNUP -->
-
-
 <div class="signup-section" style="display:none;">
 
 
-<h2>
-Create Account
-</h2>
-
+<h2>Create Account</h2>
 
 
 <form class="signup-form">
 
 
 <input
-type="text"
 class="signup-name"
-placeholder="Full Name"
+type="text"
+placeholder="Name"
 required
 >
 
 
 <input
-type="email"
 class="signup-email"
+type="email"
 placeholder="Email"
 required
 >
 
 
 <input
-type="password"
 class="signup-password"
+type="password"
 placeholder="Password"
 required
 >
 
 
-<button class="btn-red">
+<button type="submit" class="btn-red">
 Sign Up
 </button>
 
@@ -227,13 +202,10 @@ Already have account?
 Login
 </a>
 
-
 </p>
 
 
-
 </div>
-
 
 
 </div>
@@ -248,88 +220,40 @@ Login
 
 
 
+const modal = this.querySelector(".auth-modal");
 
-// ========================
-// Active Menu
-// ========================
+const loginBtn = this.querySelector(".login-btn");
 
-
-let currentPath = window.location.pathname.split('/').pop();
+const closeBtn = this.querySelector(".close-btn");
 
 
-if(currentPath==="")
-currentPath="index.html";
+const loginSection = this.querySelector(".login-section");
+
+const signupSection = this.querySelector(".signup-section");
 
 
+const showSignup = this.querySelector(".show-signup");
 
-this.querySelectorAll(".nav-links a")
-.forEach(link=>{
-
-
-if(link.getAttribute("href")===currentPath){
-
-link.classList.add("active");
-
-}
+const showLogin = this.querySelector(".show-login");
 
 
-});
+const loginForm = this.querySelector(".login-form");
+
+const signupForm = this.querySelector(".signup-form");
 
 
 
 
 
+// OPEN LOGIN
 
+loginBtn.onclick = ()=>{
 
-// ========================
-// Elements
-// ========================
-
-
-const modal=this.querySelector(".auth-modal");
-
-
-const loginBtn=this.querySelector(".login-btn");
-
-
-const closeBtn=this.querySelector(".close-btn");
-
-
-
-const loginSection=this.querySelector(".login-section");
-
-const signupSection=this.querySelector(".signup-section");
-
-
-
-const showSignup=this.querySelector(".show-signup");
-
-const showLogin=this.querySelector(".show-login");
-
-
-
-const loginForm=this.querySelector(".login-form");
-
-const signupForm=this.querySelector(".signup-form");
-
-
-
-
-
-
-
-// OPEN MODAL
-
-
-loginBtn.addEventListener("click",()=>{
-
+console.log("LOGIN BUTTON CLICK");
 
 modal.style.display="flex";
 
-
-});
-
-
+};
 
 
 
@@ -337,77 +261,45 @@ modal.style.display="flex";
 
 // CLOSE
 
-
-closeBtn.addEventListener("click",()=>{
-
+closeBtn.onclick=()=>{
 
 modal.style.display="none";
 
-
-});
-
-
-
-
-
-modal.addEventListener("click",(e)=>{
-
-
-if(e.target===modal)
-
-modal.style.display="none";
-
-
-});
+};
 
 
 
 
 
 
+// SHOW SIGNUP
 
-
-
-// SWITCH SIGNUP
-
-
-showSignup.addEventListener("click",(e)=>{
-
+showSignup.onclick=(e)=>{
 
 e.preventDefault();
-
 
 loginSection.style.display="none";
 
-
 signupSection.style.display="block";
 
-
-});
-
+};
 
 
 
 
 
 
-// SWITCH LOGIN
+// SHOW LOGIN
 
-
-showLogin.addEventListener("click",(e)=>{
-
+showLogin.onclick=(e)=>{
 
 e.preventDefault();
 
-
 signupSection.style.display="none";
-
 
 loginSection.style.display="block";
 
-
-});
-
+};
 
 
 
@@ -416,13 +308,12 @@ loginSection.style.display="block";
 
 
 
-
-// ========================
+// ==========================
 // SIGNUP API
-// ========================
+// ==========================
 
 
-signupForm.addEventListener("submit",async(e)=>{
+signupForm.addEventListener("submit", async(e)=>{
 
 
 e.preventDefault();
@@ -445,51 +336,39 @@ password:this.querySelector(".signup-password").value
 
 
 
-console.log("Signup Data:",data);
+console.log("SIGNUP DATA:",data);
 
 
 
 try{
 
 
-const res=await fetch(
+const response = await fetch(
 
 "https://red-line.onrender.com/signup",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":"application/json"
-
 
 },
 
-
 body:JSON.stringify(data)
-
 
 }
 
-
 );
 
 
 
-const result=await res.json();
+const result = await response.json();
 
 
-
-console.log(
-"Signup Response:",
-result
-);
-
+console.log("SIGNUP RESPONSE:",result);
 
 
 alert(result.message);
@@ -498,13 +377,11 @@ alert(result.message);
 
 }
 
+
 catch(error){
 
 
-console.log(error);
-
-
-alert("Signup error");
+console.log("SIGNUP ERROR:",error);
 
 
 }
@@ -521,9 +398,10 @@ alert("Signup error");
 
 
 
-// ========================
+
+// ==========================
 // LOGIN API
-// ========================
+// ==========================
 
 
 loginForm.addEventListener("submit",async(e)=>{
@@ -546,51 +424,40 @@ password:this.querySelector(".login-password").value
 
 
 
-console.log("Login Data:",data);
+console.log("LOGIN DATA:",data);
+
 
 
 
 try{
 
 
-const res=await fetch(
+const response = await fetch(
 
 "https://red-line.onrender.com/login",
 
 {
 
-
 method:"POST",
-
 
 headers:{
 
-
 "Content-Type":"application/json"
-
 
 },
 
-
 body:JSON.stringify(data)
-
 
 }
 
-
 );
 
 
 
-const result=await res.json();
+const result = await response.json();
 
 
-
-console.log(
-"Login Response:",
-result
-);
-
+console.log("LOGIN RESPONSE:",result);
 
 
 
@@ -598,10 +465,12 @@ if(result.token){
 
 
 localStorage.setItem(
-"token",
-result.token
-);
 
+"token",
+
+result.token
+
+);
 
 
 alert("Login Successful");
@@ -628,10 +497,7 @@ alert(result.message);
 catch(error){
 
 
-console.log(error);
-
-
-alert("Login error");
+console.log("LOGIN ERROR:",error);
 
 
 }
@@ -642,8 +508,9 @@ alert("Login error");
 
 
 
-}
 
+
+}
 
 }
 
@@ -653,6 +520,7 @@ customElements.define(
 "site-header",
 SiteHeader
 );
+
 
 
 class SiteFooter extends HTMLElement {
